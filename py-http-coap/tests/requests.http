@@ -3,68 +3,30 @@
 
 GET {{host_api}}/{{api_prefix}}/
 
-### Global filter 
+###
 
-@global_filter_1 = Sat
-GET {{host_api}}/admin/cash_ins?access_token={{access_token}}
-&filter={{global_filter_1}}
+PUT {{host_api}}/{{api_prefix}}/http_to_coap/
+content-type: application/json
 
-
-### Full filter test
-
-@global_filter_2 = S 2 5
-@cash_in_id_1 = 29
-@customer_id_1 = 5
-@customer_doc_id_1 = 66
-@customer_name_1 = Smith
-@target_name_1 = B
-
-GET {{host_api}}/admin/cash_ins?access_token={{access_token}}
-&filter={{global_filter_2}}
-&no={{cash_in_id_1}}
-&actor.id={{customer_id_1}}
-&actor.doc_id={{customer_doc_id_1}}
-&actor.name={{customer_name_1}}
-&target.name={{target_name_1}}
+{
+    "coap_server" : "192.168.1.37",
+    "coap_port" : 5683,
+    "coap_method" : "get",
+    "coap_payload" : {
+        "state": true
+    }
+}
 
 
-###############################################################################
-# CUSTOMER CASH OUT CSV - admin/cash_out/download/csv
-###############################################################################
+### 
 
+PUT {{host_api}}/{{api_prefix}}/http_to_coap/
+content-type: application/json
 
-GET {{host_api}}/admin/cash_ins/download/csv?access_token={{access_token}}
+{
+    "key": "value"
+}
 
-# URL: http://localhost:5000/admin/cash_ins/download/csv?access_token=3923F7CED7A34CCB
+### 
 
-
-### Global filter 
-
-
-@global_filter_3 = S
-GET {{host_api}}/admin/cash_out/download/csv?access_token={{access_token}}
-&filter={{global_filter_3}}
-
-# URL: http://localhost:5000/admin/cash_ins/download/csv?access_token=3923F7CED7A34CCB&filter=Sat
-
-
-### Full filter test
-
-
-
-@global_filter_4 = S 2 5
-@cash_in_id_2 = 29
-@customer_id_2 = 5
-@customer_doc_id_2 = 66
-@customer_name_2 = S
-@target_name_2 = B
-
-GET {{host_api}}/admin/cash_ins/download/csv?access_token={{access_token}}
-&filter={{global_filter_2}}
-&no={{cash_in_id_2}}
-&actor.id={{customer_id_2}}
-&actor.doc_id={{customer_doc_id_2}}
-&actor.name={{customer_name_2}}
-&target.name={{target_name_2}}
-
-# URL: http://localhost:5000/admin/cash_ins/download/csv?access_token=3923F7CED7A34CCB&filter=S%202%205&no=29&actor.id=5&actor.doc_id=66&actor.name=S&target.name=B
+PUT {{host_api}}/{{api_prefix}}/http_to_coap/
