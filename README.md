@@ -58,7 +58,7 @@ cd coap-connection/
 2. Compile the Py-HTTP-CoAP docker image with the command below.
 
 ```
-docker-compose build py-http-coap
+docker-compose build http-to-coap-server
 ```
 
 3. Start the Py HTTP CoAP converter and the HTTP Client with the next command.
