@@ -1,0 +1,106 @@
+@host_api = http://localhost:5100
+@api_prefix = api/v1
+
+GET {{host_api}}/{{api_prefix}}/
+
+
+### GET BUTTON STATE
+
+PUT {{host_api}}/{{api_prefix}}/http_to_coap/
+content-type: application/json
+
+{
+    "coap_server" : "192.168.1.37",
+    "coap_port" : 5683,
+    "coap_resource" : "button",
+    "coap_method" : "get"
+}
+
+
+### GET LIGHT STATE
+
+PUT {{host_api}}/{{api_prefix}}/http_to_coap/
+content-type: application/json
+
+{
+    "coap_server" : "192.168.1.37",
+    "coap_port" : 5683,
+    "coap_resource" : "light",
+    "coap_method" : "get"
+}
+
+
+### SET LIGHT STATE
+
+PUT {{host_api}}/{{api_prefix}}/http_to_coap/
+content-type: application/json
+
+{
+    "coap_server" : "192.168.1.37",
+    "coap_port" : 5683,
+    "coap_resource" : "light",
+    "coap_method" : "put",
+    "coap_payload" : {
+        "light": false
+    }
+}
+
+
+### SEND INVALID COAP REQUEST
+
+PUT {{host_api}}/{{api_prefix}}/http_to_coap/
+content-type: application/json
+
+{
+    "key": "value"
+}
+
+### SEND INVALID REQUEST (WITHOUT REQUEST BODY)
+
+PUT {{host_api}}/{{api_prefix}}/http_to_coap/
+
+
+### SEND BAD REQUEST OVER LIGHT RESOURCE
+
+PUT {{host_api}}/{{api_prefix}}/http_to_coap/
+content-type: application/json
+
+{
+    "coap_server" : "192.168.1.37",
+    "coap_port" : 5683,
+    "coap_resource" : "light",
+    "coap_method" : "put",
+    "coap_payload" : "Bad Request Payload"
+}
+
+
+### SEND NOT ALLOWED (POST) REQUEST OVER LIGHT RESOURCE
+
+PUT {{host_api}}/{{api_prefix}}/http_to_coap/
+content-type: application/json
+
+{
+    "coap_server" : "192.168.1.37",
+    "coap_port" : 5683,
+    "coap_resource" : "light",
+    "coap_method" : "post",
+    "coap_payload" : {
+        "light": false
+    }
+}
+
+
+### SEND NOT ALLOWED (DELETE) REQUEST OVER LIGHT RESOURCE
+
+PUT {{host_api}}/{{api_prefix}}/http_to_coap/
+content-type: application/json
+
+{
+    "coap_server" : "192.168.1.37",
+    "coap_port" : 5683,
+    "coap_resource" : "light",
+    "coap_method" : "delete",
+    "coap_payload" : {
+        "light": false
+    }
+}
