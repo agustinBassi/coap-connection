@@ -10,6 +10,8 @@ import os
 import json
 import time
 import logging
+import subprocess
+from subprocess import Popen, PIPE
 
 from flask import Flask, Response, abort, json, jsonify, request, url_for
 from flask_cors import CORS
@@ -73,19 +75,101 @@ def execute_coap_request():
         }
         return create_json_response(response, 422)
     # Send new current module data as response
-    coap_server = request.json.get("coap_server", "INVALID")
-    coap_port = request.json.get("coap_port", 0)
-    coap_method = request.json.get("coap_method", "INVALID")
-    coap_payload = request.json.get("coap_payload", {})
-    response = {
-        "coap_server" : coap_server,
-        "coap_port" : coap_port,
-        "coap_method" : coap_method,
-        "coap_payload" : coap_payload,
-    }
-    return create_json_response(response, 200)
+    coap_fields = create_coap_fields_from_http_request(**request.json)
+    command_response = execute_coap_client_request(**coap_fields)
+    return create_json_response(command_response, 200)
 
 #########[ Specific module code ]##############################################
+
+
+def create_coap_fields_from_http_request(**kwargs):
+    """
+    coap_fields = {
+        "coap_server" : "192.168.1.37",
+        "coap_port" : 5683,
+        "coap_resource" : "button",
+        "coap_method" : "get",
+    }
+    """
+    return {
+        "coap_server" : kwargs.get("coap_server", "INVALID"),
+        "coap_port" : int(kwargs.get("coap_port", 0)),
+        "coap_resource" : kwargs.get("coap_resource", "INVALID"),
+        "coap_method" : kwargs.get("coap_method", "INVALID").lower(),
+        "coap_payload" : kwargs.get("coap_payload", {}),
+    }
+
+
+def execute_coap_client_request(**kwargs):
+    """
+    docker-compose run py-http-coap coap-client -m get -p 5683 coap://192.168.1.37/button
+    """
+
+    def _validate_fields():
+        if kwargs.get('coap_server') == "INVALID":
+            return False
+        if kwargs.get('coap_port') == 0:
+            return False
+        if kwargs.get('coap_resource') == "INVALID":
+            return False
+        if kwargs.get('coap_method') == "invalid":
+            return False
+        return True
+
+    def _create_get_command_list():
+        command_list = []
+        command_list.append("coap-client")
+        command_list.append("-m")
+        command_list.append("get")
+        command_list.append("-p")
+        command_list.append(f"{kwargs.get('coap_port')}")
+        connection = f"coap://{kwargs.get('coap_server')}/{kwargs.get('coap_resource')}"
+        command_list.append(connection)
+        return command_list
+
+    if not _validate_fields():
+        return generate_invalid_coap_response(**kwargs)
+
+    command_list = []
+    if kwargs.get('coap_method') == "get":
+        command_list = _create_get_command_list()
+    else:
+        print(f"Unsupported CoAP method")
+
+    command_output = subprocess.Popen(
+        command_list, 
+        stdout=subprocess.PIPE, 
+        stderr=subprocess.STDOUT
+        )
+    stdout, _ = command_output.communicate()
+    decoded_output = stdout.decode('utf-8')
+    command_response = parse_coap_client_response(decoded_output)
+    return command_response
+
+
+def generate_invalid_coap_response(**kwargs):
+    return {
+        "error" : "invalid data received from client",
+        "received" : kwargs,
+        "solution" : "pass correct message like: 'coap-client -m get -p 5683 coap://192.168.1.37/button'",
+    }
+
+
+def parse_coap_client_response(command_output):
+    splitted = command_output.split("\n")
+    message_output = splitted[1]
+    total_info = splitted[0].split(" ")
+    version = total_info[0].split(":")[1]
+    message_type = total_info[1].split(":")[1]
+    method = total_info[2].split(":")[1]
+    message_id = total_info[3].split(":")[1]
+    return {
+        "version": version,
+        "message_type": message_type,
+        "method": method,
+        "message_id": message_id,
+        "output" : message_output,
+    }
 
 
 #########[ Module main code ]##################################################

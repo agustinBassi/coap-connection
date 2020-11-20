@@ -11,6 +11,7 @@ content-type: application/json
 {
     "coap_server" : "192.168.1.37",
     "coap_port" : 5683,
+    "coap_resource" : "button",
     "coap_method" : "get",
     "coap_payload" : {
         "state": true
