@@ -40,7 +40,7 @@
                             <label for="coap_server_ip">COAP SERVER IP</label>
                         </div>
                         <div class="input-field col l3 m6 s6">
-                            <input placeholder="./well-known/core" id="coap_server_resource" type="text" class="validate">
+                            <input placeholder=".well-known/core" id="coap_server_resource" type="text" class="validate">
                             <label for="coap_server_resource">COAP SERVER RESOURCE</label>
                         </div>
                         <div class="input-field col l2 s4 m4">
@@ -61,14 +61,14 @@
                         </div>
                         <div class="row">
                             <div class="input-field col l6 m6 s6">
-                                <input placeholder="http://localhost:5000/api/v1/http_to_coap/" id="http_to_coap_endpoint_url" type="text" class="validate">
+                                <input placeholder="http://localhost:5100/api/v1/http_to_coap/" id="http_to_coap_endpoint_url" type="text" class="validate">
                                 <label for="http_to_coap_endpoint_url">HTTP TO COAP ENDPOINT URL</label>
                             </div>
                         </div>
                     </div>
                 </form>
                 <div class="col s12">
-                    <button class="btn waves-effect waves-light" style="background-color:#6ba6d6" onclick="execute_http_request();" name="post_button">Request</button>
+                    <button class="btn waves-effect waves-light" style="background-color:#6ba6d6" onclick="App_ExecuteHttpToCoapRequest();" name="post_button">Request</button>
                 </div>
             </div>
             <br/>
@@ -86,7 +86,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col l6 s6">
-                        <h5 class="white-text">BLE connection</h5>
+                        <h5 class="white-text">CoAP connection</h5>
                         <p class="grey-text text-lighten-4">Copyright Agustin Bassi - 2020</p>
                     </div>
                     <div class="col l6 s6">
