@@ -14,8 +14,6 @@ services:
       -               ./http-coap-interface/src:/usr/src/app
     ports:
       -               "5000:5000"
-    env_file:
-      -               env
     command:          python3 app.py
 
   http-to-coap-web-client:
