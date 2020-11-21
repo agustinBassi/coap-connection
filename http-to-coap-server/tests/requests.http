@@ -10,9 +10,9 @@ PUT {{host_api}}/{{api_prefix}}/http_to_coap/
 content-type: application/json
 
 {
-    "coap_server" : "192.168.1.37",
-    "coap_port" : 5683,
-    "coap_resource" : "button",
+    "coap_server_ip" : "192.168.1.37",
+    "coap_server_port" : 5683,
+    "coap_server_resource" : "button",
     "coap_method" : "get"
 }
 
@@ -23,9 +23,9 @@ PUT {{host_api}}/{{api_prefix}}/http_to_coap/
 content-type: application/json
 
 {
-    "coap_server" : "192.168.1.37",
-    "coap_port" : 5683,
-    "coap_resource" : "light",
+    "coap_server_ip" : "192.168.1.37",
+    "coap_server_port" : 5683,
+    "coap_server_resource" : "light",
     "coap_method" : "get"
 }
 
@@ -36,9 +36,9 @@ PUT {{host_api}}/{{api_prefix}}/http_to_coap/
 content-type: application/json
 
 {
-    "coap_server" : "192.168.1.37",
-    "coap_port" : 5683,
-    "coap_resource" : "light",
+    "coap_server_ip" : "192.168.1.37",
+    "coap_server_port" : 5683,
+    "coap_server_resource" : "light",
     "coap_method" : "put",
     "coap_payload" : {
         "light": false
@@ -66,9 +66,9 @@ PUT {{host_api}}/{{api_prefix}}/http_to_coap/
 content-type: application/json
 
 {
-    "coap_server" : "192.168.1.37",
-    "coap_port" : 5683,
-    "coap_resource" : "light",
+    "coap_server_ip" : "192.168.1.37",
+    "coap_server_port" : 5683,
+    "coap_server_resource" : "light",
     "coap_method" : "put",
     "coap_payload" : "Bad Request Payload"
 }
@@ -80,9 +80,9 @@ PUT {{host_api}}/{{api_prefix}}/http_to_coap/
 content-type: application/json
 
 {
-    "coap_server" : "192.168.1.37",
-    "coap_port" : 5683,
-    "coap_resource" : "light",
+    "coap_server_ip" : "192.168.1.37",
+    "coap_server_port" : 5683,
+    "coap_server_resource" : "light",
     "coap_method" : "post",
     "coap_payload" : {
         "light": false
@@ -96,9 +96,9 @@ PUT {{host_api}}/{{api_prefix}}/http_to_coap/
 content-type: application/json
 
 {
-    "coap_server" : "192.168.1.37",
-    "coap_port" : 5683,
-    "coap_resource" : "light",
+    "coap_server_ip" : "192.168.1.37",
+    "coap_server_port" : 5683,
+    "coap_server_resource" : "light",
     "coap_method" : "delete",
     "coap_payload" : {
         "light": false

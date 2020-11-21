@@ -74,6 +74,7 @@ def execute_coap_request():
     if not request.json:
         response = generate_invalid_coap_response()
         return create_json_response(response, 422)
+    print(f"execute_coap_request - {request.json}")
     # Send new current module data as response
     coap_fields = create_coap_fields_from_http_request(**request.json)
     command_response = execute_coap_client_request(**coap_fields)
@@ -84,9 +85,9 @@ def execute_coap_request():
 
 def create_coap_fields_from_http_request(**kwargs):
     return {
-        "coap_server" : kwargs.get("coap_server", "INVALID"),
-        "coap_port" : int(kwargs.get("coap_port", 0)),
-        "coap_resource" : kwargs.get("coap_resource", "INVALID"),
+        "coap_server_ip" : kwargs.get("coap_server_ip", "INVALID"),
+        "coap_server_resource" : kwargs.get("coap_server_resource", "INVALID"),
+        "coap_server_port" : int(kwargs.get("coap_server_port", 0)),
         "coap_method" : kwargs.get("coap_method", "INVALID").lower(),
         "coap_payload" : kwargs.get("coap_payload", {}),
     }
@@ -95,13 +96,13 @@ def create_coap_fields_from_http_request(**kwargs):
 def execute_coap_client_request(**kwargs):
 
     def _validate_fields():
-        if kwargs.get('coap_server') == "INVALID":
+        if kwargs.get('coap_server_ip') == "INVALID":
             return False
-        if kwargs.get('coap_port') == 0:
+        if kwargs.get('coap_server_resource') == "INVALID":
             return False
-        if kwargs.get('coap_resource') == "INVALID":
+        if kwargs.get('coap_server_port') == 0:
             return False
-        if kwargs.get('coap_method') == "invalid":
+        if kwargs.get('coap_method') == "INVALID":
             return False
         if kwargs.get('coap_method') in ["put", "post"]:
             if not kwargs.get('coap_payload'):
@@ -114,8 +115,8 @@ def execute_coap_client_request(**kwargs):
         command_list.append("-m")
         command_list.append(method)
         command_list.append("-p")
-        command_list.append(f"{kwargs.get('coap_port')}")
-        connection = f"coap://{kwargs.get('coap_server')}/{kwargs.get('coap_resource')}"
+        command_list.append(f"{kwargs.get('coap_server_port')}")
+        connection = f"coap://{kwargs.get('coap_server_ip')}/{kwargs.get('coap_server_resource')}"
         command_list.append(connection)
         return command_list
 
@@ -128,8 +129,8 @@ def execute_coap_client_request(**kwargs):
         payload = json.dumps(kwargs.get('coap_payload')).replace(" ", "")
         command_list.append(payload)
         command_list.append("-p")
-        command_list.append(f"{kwargs.get('coap_port')}")
-        connection = f"coap://{kwargs.get('coap_server')}/{kwargs.get('coap_resource')}"
+        command_list.append(f"{kwargs.get('coap_server_port')}")
+        connection = f"coap://{kwargs.get('coap_server_ip')}/{kwargs.get('coap_server_resource')}"
         command_list.append(connection)
         return command_list
 
@@ -162,9 +163,9 @@ def generate_invalid_coap_response(**kwargs):
         "received" : kwargs,
         "solution" : "pass correct message request body in JSON format",
         "request_body_example": {
-            "coap_server" : "192.168.1.37",
-            "coap_port" : 5683,
-            "coap_resource" : "light",
+            "coap_server_ip" : "192.168.1.37",
+            "coap_server_resource" : "light",
+            "coap_server_port" : 5683,
             "coap_method" : "put",
             "coap_payload" : {
                 "light": False
@@ -184,7 +185,7 @@ def parse_coap_client_response(command_output):
             "2.04" : "Changed",
             "2.05" : "Content",
             "2.31" : "Continue",
-            "4.00" : "Bad Request",
+            "4.0"  : "Bad Request",
             "4.01" : "Unauthorized",
             "4.02" : "Bad Option",
             "4.03" : "Forbidden",
