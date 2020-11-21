@@ -55,11 +55,13 @@ git clone https://github.com/agustinBassi/coap-connection.git
 cd coap-connection/
 ```
 
-2. Compile the `HTTP-CoAP Interface` docker image with the command below.
+2. Compile the `HTTP-CoAP Interface` docker image with the command below. 
 
 ```
 docker-compose build http-coap-interface
 ```
+
+> **_NOTE:_**: The default architecture to compile is for ARM. If it is needed to compile for x86-64 just comment/uncomment the lines 8-9 in the `docker-compose.yml` file.
 
 3. Start the `HTTP-CoAP Interface` and the `HTTP-CoAP Web Client` with the next command.
 

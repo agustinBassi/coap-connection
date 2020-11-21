@@ -5,7 +5,8 @@ services:
   http-coap-interface:
     build:
       context:        ./http-coap-interface
-      dockerfile:     Dockerfile
+      # dockerfile:     Dockerfile
+      dockerfile:     DockerfileRpi
     hostname:         http-coap-interface
     container_name:   http-coap-interface
     network_mode:     host
