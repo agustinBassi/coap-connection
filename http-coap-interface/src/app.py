@@ -69,16 +69,27 @@ def show_resources():
     return create_json_response(response, 200)
 
 
+
+@app.route(APP_CONFIG["PREFIX"] + '/http_to_coap/test/', methods=['PUT', 'POST'])
+def test_coap_request():
+    if not request.json:
+        response = generate_invalid_coap_response()
+        return create_json_response(response, 422)
+    print(f"execute_coap_request - {request.json}")
+    coap_fields = create_coap_fields_from_http_request(**request.json)
+    command_response = generate_test_coap_response(**coap_fields)
+    return create_json_response(command_response, 200)
+
+
 @app.route(APP_CONFIG["PREFIX"] + '/http_to_coap/', methods=['PUT', 'POST'])
 def execute_coap_request():
     if not request.json:
         response = generate_invalid_coap_response()
         return create_json_response(response, 422)
-    print(f"execute_coap_request - {request.json}")
-    # Send new current module data as response
     coap_fields = create_coap_fields_from_http_request(**request.json)
     command_response = execute_coap_client_request(**coap_fields)
     return create_json_response(command_response, 200)
+
 
 #########[ Specific module code ]##############################################
 
@@ -171,6 +182,13 @@ def generate_invalid_coap_response(**kwargs):
                 "light": False
             }
         }
+    }
+
+
+def generate_test_coap_response(**kwargs):
+    return {
+        "message" : "Test HTTP-COAP Interface endpoint",
+        "received" : kwargs,
     }
 
 

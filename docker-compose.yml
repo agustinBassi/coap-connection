@@ -2,15 +2,15 @@ version: '3'
 
 services:
 
-  http-coap-semi-proxy:
+  http-coap-interface:
     build:
-      context:        ./http-coap-semi-proxy
+      context:        ./http-coap-interface
       dockerfile:     Dockerfile
-    hostname:         http-coap-semi-proxy
-    container_name:   http-coap-semi-proxy
+    hostname:         http-coap-interface
+    container_name:   http-coap-interface
     network_mode:     host
     volumes:
-      -               ./http-coap-semi-proxy/src:/usr/src/app
+      -               ./http-coap-interface/src:/usr/src/app
     ports:
       -               "5000:5000"
     env_file:

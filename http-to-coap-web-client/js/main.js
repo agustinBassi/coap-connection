@@ -8,7 +8,7 @@
 //=======[ Settings & Data ]===================================================
 
 const DEFAULT_HTTP_METHOD           = "PUT";
-const DEFAULT_HTTP_TO_COAP_URL      = "http://localhost:5100/api/v1/http_to_coap/";
+const DEFAULT_HTTP_TO_COAP_URL      = "http://localhost:5100/api/v1/http_to_coap/test/";
 const DEFAULT_COAP_SERVER_IP        = "localhost";
 const DEFAULT_COAP_SERVER_RESOURCE  = ".well-known/core";
 const DEFAULT_COAP_SERVER_PORT      = 5683;
