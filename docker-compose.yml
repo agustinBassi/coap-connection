@@ -5,8 +5,7 @@ services:
   http-coap-interface:
     build:
       context:        ./http-coap-interface
-      # dockerfile:     Dockerfile
-      dockerfile:     DockerfileRpi
+      dockerfile:     Dockerfile
     hostname:         http-coap-interface
     container_name:   http-coap-interface
     network_mode:     host
@@ -17,7 +16,6 @@ services:
     command:          python3 app.py
 
   http-to-coap-web-client:
-    # service header
     image:            httpd:2.4
     hostname:         http-to-coap-web-client
     container_name:   http-to-coap-web-client
