@@ -1,0 +1,3 @@
+[submodule "embedded-coap-server"]
+	path = embedded-coap-server
+	url = https://github.com/agustinBassi/embedded-coap-server.git

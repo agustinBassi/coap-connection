@@ -20,9 +20,9 @@ The goal of this project is to create an open source CoAP Platform to be used as
 
 The platform consists in several sub-application described below:
 
-* **Py-HTTP-CoAP**: An HTTP REST API which maps an HTTP PUT request (with JSON body) into desired CoAP request.  
-* **HTTP Client**: An HTTP Client interface to interact with HTTP Sever Py-HTTP-CoAP. There, the user can configure arguments for CoAP request like CoAp server, Port, Method, Payload, etc.
-* **Embedded CoAP Server**: A git submodule of embedded CoAP server which can runs in different platforms like ESP32 or ESP8266 based in Arduino framework. More info in its README file.
+* **HTTP-CoAP Semi Proxy**: An HTTP REST API which maps an HTTP PUT requests (with JSON body with CoAP field) into desired CoAP request. It is a 'Semi Proxy' because it does not map a CoAP response into HTTP method. Instead, it sends the CoAP response into HTTP Response Body, but always returns an HTTP 200 status code.
+* **HTTP-Coap Web Client**: An HTTP Client interface to interact with `HTTP-CoAP Semi Proxy`. There, the user can configure arguments for CoAP request like CoAp server, Port, Method, Payload, etc.
+* **Embedded CoAP Server**: A git submodule of embedded CoAP server which can runs in different platforms like ESP32 or ESP8266 based in Arduino framework. More info in its [README file](embedded-coap-server/README.md).
 
 All of this parts are well described in the [Project Wiki](https://github.com/agustinBassi/coap-connection/wiki). Please, refer to it in order to get all required information.
 
@@ -42,7 +42,6 @@ The platform needs the next dependencies.
 * Docker (installation steps in [official documentation](https://docs.docker.com/get-docker/)).
 * Docker-Compose (installation steps in [official documentation](https://docs.docker.com/compose/install/)).
 
-
 ## 
 ## Run the application
 
@@ -55,19 +54,19 @@ git clone https://github.com/agustinBassi/coap-connection.git
 cd coap-connection/
 ```
 
-2. Compile the Py-HTTP-CoAP docker image with the command below.
+2. Compile the `HTTP-CoAP Semi Proxy` docker image with the command below.
 
 ```
-docker-compose build http-to-coap-server
+docker-compose build http-coap-semi-proxy
 ```
 
-3. Start the Py HTTP CoAP converter and the HTTP Client with the next command.
+3. Start the `HTTP-CoAP Semi Proxy` and the `HTTP-Coap Web Client` with the next command.
 
 ```
 docker-compose up
 ```
 
-4. Run the HTTP Client opening [http://raspberri_pi_ip:5001/](http://raspberri_pi_ip:5001/) in the web browser.
+4. Run the `HTTP-Coap Web Client` opening [http://raspberri_pi_ip:5001/](http://raspberri_pi_ip:5001/) in the web browser.
 
 ## 
 ## Want to help?
